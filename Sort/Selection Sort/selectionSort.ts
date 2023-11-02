@@ -6,7 +6,6 @@ function selectionSort(arr: number[]): number[] {
         min = j;
       }
     }
-
     if (i !== min) [arr[i], arr[min]] = [arr[min], arr[i]];
   }
 
