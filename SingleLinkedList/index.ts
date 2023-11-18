@@ -122,12 +122,13 @@ list.push(1);
 list.push(2);
 list.push(3);
 // console.log(list.unShift(0));
-console.log(list.get(2));
-console.log(list.set(5, 2));
 
 // console.log(list.shift());
 // console.log(list.shift());
 // console.log(list.shift());
+
+// console.log(list.get(2));
+// console.log(list.set(5, 2));
 
 // console.log(list.pop());
 // console.log(list.pop());
