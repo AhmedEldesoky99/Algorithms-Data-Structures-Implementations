@@ -1,3 +1,9 @@
+//time complexity
+// insertion O(1)
+// removal O(1) || O(n)
+// searching O(n)
+// access O(n)
+
 type node = CNode | undefined | null;
 
 class CNode {
@@ -50,7 +56,7 @@ class SinglyLinkedList {
   //sol 2
   pop() {
     if (this.length === 0) return;
-    let current: CNode | null, prev: CNode | null;
+    let current: node, prev: node;
     current = prev = this.head;
     while (current?.next) {
       prev = current;
@@ -109,11 +115,52 @@ class SinglyLinkedList {
     }
     return temp;
   }
-  set(value: any, idx: number): boolean {
+  set(data: any, idx: number): boolean {
     const foundedNode = this.get(idx);
     if (!foundedNode) return false;
-    foundedNode.data = value;
+    foundedNode.data = data;
     return true;
+  }
+  insert(data: any, idx: number): boolean {
+    if (idx < 0 || idx > this.length) return false;
+
+    if (idx === 0) this.unShift(data);
+    else if (idx === this.length) this.push(data);
+    else {
+      const newNode = new CNode(data);
+      const pervNode = this.get(idx - 1);
+      newNode.next = pervNode?.next;
+      pervNode!.next = newNode;
+      this.length++;
+    }
+    return true;
+  }
+  remove(idx: number): boolean {
+    if (idx < 0 || idx > this.length) return false;
+    if (idx === 0) this.shift();
+    else if (idx === this.length) this.pop();
+    else {
+      let pervNode = this.get(idx - 1);
+      pervNode!.next = pervNode!.next?.next;
+    }
+
+    return true;
+  }
+  reverse(): SinglyLinkedList {
+    let current = this.head;
+    [this.head, this.tail] = [this.tail, this.head];
+
+    let next: node;
+    let prev: node = null;
+
+    for (let i = 0; i < this.length; i++) {
+      next = current?.next;
+      current!.next = prev;
+      prev = current; //for move
+      current = next; //for move
+    }
+
+    return this;
   }
 }
 
@@ -133,5 +180,17 @@ list.push(3);
 // console.log(list.pop());
 // console.log(list.pop());
 // console.log(list.pop());
+
+// console.log(list.insert(0, 0));
+// console.log(list.insert(5, 3));
+// console.log(list.insert(55, 4));
+// console.log(list.insert(55, 20)); //to large index
+// console.log(list.insert(55, -1)); // negative index
+
+// console.log(list.remove(0));
+// console.log(list.remove(3));
+// console.log(list.remove(1));
+
+// console.log(list.reverse());
 
 console.log(list.getList());
