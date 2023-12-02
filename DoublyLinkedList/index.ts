@@ -169,6 +169,6 @@ console.log(list.push(6));
 // list.insert(9, 2);
 // list.insert(10, 2);
 
-list.remove(1);
+// list.remove(1);
 
 console.log(list.printListValues());
