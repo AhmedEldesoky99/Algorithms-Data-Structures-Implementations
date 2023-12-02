@@ -4,9 +4,9 @@
 // searching O(n)
 // access O(n)
 
-type node = CNode | undefined | null;
+type node = SNode | undefined | null;
 
-class CNode {
+class SNode {
   public next: node;
   public data: any;
   constructor(data: any) {
@@ -24,7 +24,7 @@ class SinglyLinkedList {
     this.length = 0;
   }
   push(data: any) {
-    const newNode = new CNode(data);
+    const newNode = new SNode(data);
     if (this.length === 0) {
       this.head = this.tail = newNode;
     } else {
@@ -81,7 +81,7 @@ class SinglyLinkedList {
     return removedItem;
   }
   unShift(data: any) {
-    let newNode = new CNode(data);
+    let newNode = new SNode(data);
     newNode.next = this.head;
     this.head = newNode;
     this.length++;
@@ -127,7 +127,7 @@ class SinglyLinkedList {
     if (idx === 0) this.unShift(data);
     else if (idx === this.length) this.push(data);
     else {
-      const newNode = new CNode(data);
+      const newNode = new SNode(data);
       const pervNode = this.get(idx - 1);
       newNode.next = pervNode?.next;
       pervNode!.next = newNode;
