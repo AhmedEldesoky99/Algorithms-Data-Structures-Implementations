@@ -1,7 +1,9 @@
-class Queue {
+export class Queue {
   items: any[];
+  length: number;
   constructor() {
     this.items = [];
+    this.length = this.items.length;
   }
   enqueue(data: any): number {
     this.items.push(data);
@@ -21,5 +23,3 @@ queue.enqueue(7);
 queue.enqueue(8);
 
 queue.dequeue();
-
-console.log(queue);
