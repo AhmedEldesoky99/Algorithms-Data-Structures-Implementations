@@ -60,6 +60,22 @@ class Graph {
     return true;
   }
 
+  DFSRecursion(vertex: string): string[] {
+    let result: string[] = [];
+    let visitedVertex = {};
+    let adjacencyList = this.adjacencyList;
+
+    function DFS(vertex: string) {
+      if (!adjacencyList[vertex]) return;
+      visitedVertex[vertex] = true;
+      result.push(vertex);
+      adjacencyList[vertex].forEach((v) => (!visitedVertex[v] ? DFS(v) : v));
+    }
+    DFS(vertex);
+
+    return result;
+  }
+
   getGraph() {
     return this.adjacencyList;
   }
@@ -74,7 +90,7 @@ citiesGraph.addVertex("Alex");
 citiesGraph.addVertex("Isamalia");
 citiesGraph.addVertex("Aswan");
 
-citiesGraph.removeVertex("Aswan");
+// citiesGraph.removeVertex("Aswan");
 
 citiesGraph.addEdge("Portsaid", "Isamalia");
 citiesGraph.addEdge("Portsaid", "Domiatta");
@@ -84,8 +100,12 @@ citiesGraph.addEdge("Portsaid", "Cairo");
 citiesGraph.addEdge("Alex", "Cairo");
 citiesGraph.addEdge("Suez", "Cairo");
 citiesGraph.addEdge("Cairo", "Aswan");
-citiesGraph.addEdge("Aswan", "Portsaid");
+citiesGraph.addEdge("Aswan", "Alex");
+citiesGraph.addEdge("Aswan", "Suez");
 
+citiesGraph.addEdge("Aswan", "Portsaid");
 citiesGraph.removeEdge("Aswan", "Portsaid");
+
+console.log(citiesGraph.DFSRecursion("Portsaid"));
 
 console.log(citiesGraph.getGraph());
