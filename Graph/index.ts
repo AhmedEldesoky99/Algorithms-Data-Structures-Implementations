@@ -6,14 +6,16 @@ class Graph {
   constructor() {
     this.adjacencyList = {};
   }
+
+  private guardCondition(vertex1: string, vertex2: string): boolean {
+    return !this.isExist(vertex1) || !this.isExist(vertex2) ? false : true;
+  }
+
   isExist(vertex: string): boolean {
     if (this.adjacencyList[vertex]) {
       return true;
     }
     return false;
-  }
-  private guardCondition(vertex1: string, vertex2: string): boolean {
-    return !this.isExist(vertex1) || !this.isExist(vertex2) ? false : true;
   }
 
   addVertex(vertex: string): Boolean {
@@ -57,6 +59,7 @@ class Graph {
 
     return true;
   }
+
   getGraph() {
     return this.adjacencyList;
   }
