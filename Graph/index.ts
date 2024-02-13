@@ -60,6 +60,28 @@ class Graph {
     return true;
   }
 
+  DFSIterative(vertex: string): string[] {
+    let stack: string[] = [vertex];
+    let result: string[] = [];
+    let visitedVertex = {};
+    let currentVertex: string;
+
+    visitedVertex[vertex] = true;
+
+    while (stack.length) {
+      currentVertex = stack.pop() || "";
+      result.push(currentVertex);
+
+      this.adjacencyList[currentVertex].forEach((neighbor) => {
+        if (!visitedVertex[neighbor]) {
+          visitedVertex[neighbor] = true;
+          stack.push(neighbor);
+        }
+      });
+    }
+
+    return result;
+  }
   DFSRecursion(vertex: string): string[] {
     let result: string[] = [];
     let visitedVertex = {};
@@ -106,6 +128,7 @@ citiesGraph.addEdge("Aswan", "Suez");
 citiesGraph.addEdge("Aswan", "Portsaid");
 citiesGraph.removeEdge("Aswan", "Portsaid");
 
-console.log(citiesGraph.DFSRecursion("Portsaid"));
+console.log("Recursion", citiesGraph.DFSRecursion("Portsaid"));
+console.log("Iterative", citiesGraph.DFSIterative("Portsaid"));
 
-console.log(citiesGraph.getGraph());
+// console.log(citiesGraph.getGraph());
