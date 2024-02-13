@@ -82,6 +82,7 @@ class Graph {
 
     return result;
   }
+
   DFSRecursion(vertex: string): string[] {
     let result: string[] = [];
     let visitedVertex = {};
@@ -91,7 +92,9 @@ class Graph {
       if (!adjacencyList[vertex]) return;
       visitedVertex[vertex] = true;
       result.push(vertex);
-      adjacencyList[vertex].forEach((v) => (!visitedVertex[v] ? DFS(v) : v));
+      adjacencyList[vertex].forEach((v) => {
+        if (!visitedVertex[v]) DFS(v);
+      });
     }
     DFS(vertex);
 
