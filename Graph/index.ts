@@ -60,7 +60,8 @@ class Graph {
     return true;
   }
 
-  DFSIterative(vertex: string): string[] {
+  //depth first graph
+  DFGIterative(vertex: string): string[] {
     let stack: string[] = [vertex];
     let result: string[] = [];
     let visitedVertex = {};
@@ -83,7 +84,7 @@ class Graph {
     return result;
   }
 
-  DFSRecursion(vertex: string): string[] {
+  DFGRecursion(vertex: string): string[] {
     let result: string[] = [];
     let visitedVertex = {};
     let adjacencyList = this.adjacencyList;
@@ -100,7 +101,29 @@ class Graph {
 
     return result;
   }
+  //Breadth first graph
+  BFGIterative(vertex: string): string[] {
+    let queue: string[] = [vertex];
+    let result: string[] = [];
+    let visitedVertex = {};
+    let currentVertex: string;
 
+    visitedVertex[vertex] = true;
+
+    while (queue.length) {
+      currentVertex = queue.shift() || "";
+      result.push(currentVertex);
+
+      this.adjacencyList[currentVertex].forEach((neighbor) => {
+        if (!visitedVertex[neighbor]) {
+          visitedVertex[neighbor] = true;
+          queue.push(neighbor);
+        }
+      });
+    }
+
+    return result;
+  }
   getGraph() {
     return this.adjacencyList;
   }
@@ -131,7 +154,9 @@ citiesGraph.addEdge("Aswan", "Suez");
 citiesGraph.addEdge("Aswan", "Portsaid");
 citiesGraph.removeEdge("Aswan", "Portsaid");
 
-console.log("Recursion", citiesGraph.DFSRecursion("Portsaid"));
-console.log("Iterative", citiesGraph.DFSIterative("Portsaid"));
+console.log("DFG Recursion", citiesGraph.DFGRecursion("Portsaid"));
+console.log("DFG Iterative", citiesGraph.DFGIterative("Portsaid"));
+
+console.log("BFG Iterative", citiesGraph.BFGIterative("Portsaid"));
 
 // console.log(citiesGraph.getGraph());
