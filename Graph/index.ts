@@ -1,13 +1,11 @@
 //undirected graph
-class Graph {
-  private adjacencyList: {
-    [name: string]: string[];
-  };
+export class Graph {
+  protected adjacencyList: any;
   constructor() {
     this.adjacencyList = {};
   }
 
-  private guardCondition(vertex1: string, vertex2: string): boolean {
+  protected guardCondition(vertex1: string, vertex2: string): boolean {
     return !this.isExist(vertex1) || !this.isExist(vertex2) ? false : true;
   }
 
@@ -40,10 +38,10 @@ class Graph {
   removeEdge(vertex1: string, vertex2: string): boolean {
     if (!this.guardCondition(vertex1, vertex2)) return false;
     this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(
-      (v) => v !== vertex2
+      (v: string) => v !== vertex2
     );
     this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(
-      (v) => v !== vertex1
+      (v: string) => v !== vertex1
     );
 
     return true;
@@ -64,7 +62,7 @@ class Graph {
   DFGIterative(vertex: string): string[] {
     let stack: string[] = [vertex];
     let result: string[] = [];
-    let visitedVertex = {};
+    let visitedVertex: { [name: string]: boolean } = {};
     let currentVertex: string;
 
     visitedVertex[vertex] = true;
@@ -73,7 +71,7 @@ class Graph {
       currentVertex = stack.pop() || "";
       result.push(currentVertex);
 
-      this.adjacencyList[currentVertex].forEach((neighbor) => {
+      this.adjacencyList[currentVertex].forEach((neighbor: string) => {
         if (!visitedVertex[neighbor]) {
           visitedVertex[neighbor] = true;
           stack.push(neighbor);
@@ -86,14 +84,14 @@ class Graph {
 
   DFGRecursion(vertex: string): string[] {
     let result: string[] = [];
-    let visitedVertex = {};
+    let visitedVertex: { [name: string]: boolean } = {};
     let adjacencyList = this.adjacencyList;
 
     function DFS(vertex: string) {
       if (!adjacencyList[vertex]) return;
       visitedVertex[vertex] = true;
       result.push(vertex);
-      adjacencyList[vertex].forEach((v) => {
+      adjacencyList[vertex].forEach((v: string) => {
         if (!visitedVertex[v]) DFS(v);
       });
     }
@@ -105,7 +103,7 @@ class Graph {
   BFGIterative(vertex: string): string[] {
     let queue: string[] = [vertex];
     let result: string[] = [];
-    let visitedVertex = {};
+    let visitedVertex: { [name: string]: boolean } = {};
     let currentVertex: string;
 
     visitedVertex[vertex] = true;
@@ -114,7 +112,7 @@ class Graph {
       currentVertex = queue.shift() || "";
       result.push(currentVertex);
 
-      this.adjacencyList[currentVertex].forEach((neighbor) => {
+      this.adjacencyList[currentVertex].forEach((neighbor: string) => {
         if (!visitedVertex[neighbor]) {
           visitedVertex[neighbor] = true;
           queue.push(neighbor);
@@ -159,4 +157,4 @@ console.log("DFG Iterative", citiesGraph.DFGIterative("Portsaid"));
 
 console.log("BFG Iterative", citiesGraph.BFGIterative("Portsaid"));
 
-// console.log(citiesGraph.getGraph());
+console.log(citiesGraph.getGraph());
