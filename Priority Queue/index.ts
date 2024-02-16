@@ -112,6 +112,22 @@ class PriorityQueue {
   }
 }
 
+export class SimplePriorityQueue {
+  private values: any[];
+  constructor() {
+    this.values = [];
+  }
+  enqueue(val: string, priority: number) {
+    this.values.push({ val, priority });
+  }
+  dequeue() {
+    return this.values.shift();
+  }
+  sort() {
+    this.values.sort((a, b) => a.priority - b.priority);
+  }
+}
+
 const priorityQueue = new PriorityQueue();
 
 priorityQueue.enQueue("low ", 3);
