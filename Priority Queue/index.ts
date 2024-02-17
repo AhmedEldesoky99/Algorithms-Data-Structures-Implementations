@@ -113,14 +113,15 @@ class PriorityQueue {
 }
 
 export class SimplePriorityQueue {
-  private values: any[];
+  public values: { val: string; priority: number }[];
   constructor() {
     this.values = [];
   }
   enqueue(val: string, priority: number) {
     this.values.push({ val, priority });
+    this.sort();
   }
-  dequeue() {
+  dequeue(): { val: string; priority: number } | undefined {
     return this.values.shift();
   }
   sort() {

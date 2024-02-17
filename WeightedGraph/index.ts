@@ -1,3 +1,5 @@
+import { SimplePriorityQueue } from "../Priority Queue";
+
 type edge = { node: string; weight: number };
 
 interface nodeType {
@@ -55,18 +57,78 @@ class WeightedGraph {
   getGraph() {
     return this.adjacencyList;
   }
+
+  Dijkstra(start: string, finish: string) {
+    const visited = new SimplePriorityQueue();
+    const distances: { [vertex: string]: number } = {};
+    const previous: { [vertex: string]: any } = {};
+    let smallest: string;
+    let path: string[] = [];
+    //build up initial state
+    for (let vertex in this.adjacencyList) {
+      if (vertex === start) {
+        distances[vertex] = 0;
+        visited.enqueue(vertex, 0);
+      } else {
+        distances[vertex] = Infinity;
+        visited.enqueue(vertex, Infinity);
+      }
+      previous[vertex] = null;
+    }
+    // as long as there is something to visit
+    while (visited.values.length) {
+      smallest = visited.dequeue()?.val || "";
+      if (smallest === finish) {
+        //WE ARE DONE
+        //BUILD UP PATH TO RETURN AT END
+        console.log(previous);
+        while (previous[smallest]) {
+          path.push(smallest);
+          smallest = previous[smallest];
+        }
+        break;
+      }
+      if (smallest || distances[smallest] !== Infinity) {
+        for (let neighbor in this.adjacencyList[smallest]) {
+          //find neighboring node
+          let nextNode = this.adjacencyList[smallest][neighbor];
+          //calculate new distance to neighboring node
+          let candidate = distances[smallest] + nextNode.weight;
+          let nextNeighbor = nextNode.node;
+          if (candidate < distances[nextNeighbor]) {
+            //updating new smallest distance to neighbor
+            distances[nextNeighbor] = candidate;
+            //updating previous - How we got to neighbor
+            previous[nextNeighbor] = smallest;
+            //enqueue in priority queue with new priority
+            visited.enqueue(nextNeighbor, candidate);
+          }
+        }
+      }
+    }
+    console.log(visited);
+
+    return path.concat(start).reverse();
+  }
 }
 
 const graph = new WeightedGraph();
 
-graph.addVertex("Portsaid");
-graph.addVertex("Ismalia");
-graph.addVertex("Cairo");
+graph.addVertex("A");
+graph.addVertex("B");
+graph.addVertex("C");
+graph.addVertex("D");
+graph.addVertex("E");
+graph.addVertex("F");
 
-graph.addEdge("Portsaid", "Ismalia", 75);
+graph.addEdge("A", "B", 4);
+graph.addEdge("A", "C", 2);
+graph.addEdge("B", "E", 3);
+graph.addEdge("C", "D", 2);
+graph.addEdge("C", "F", 4);
+graph.addEdge("D", "E", 3);
+graph.addEdge("D", "F", 1);
+graph.addEdge("E", "F", 1);
+// console.log(graph.getGraph());
 
-// graph.removeEdge("Portsaid", "Ismalia");
-
-graph.removeVertex("Portsaid");
-
-console.log(graph.getGraph());
+console.log(graph.Dijkstra("A", "E"));
